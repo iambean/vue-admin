@@ -57,17 +57,17 @@
             requestLogin(this.ruleForm2.account,  this.ruleForm2.checkPass).then(data => {
 //            requestLogin(loginParams).then(data => {
               this.logining = false;
+
               //NProgress.done();
               let { msg, code, user } = data;
-              if (code !== 200) {
-                this.$message({
-                  message: msg,
-                  type: 'error'
-                });
-              } else {
-                sessionStorage.setItem('user', JSON.stringify(user));
-                this.$router.push({ path: '/table' });
-              }
+              sessionStorage.setItem('user', JSON.stringify(user));
+              this.$router.push({ path: '/table' });
+            }, err=>{
+              this.logining = false;
+              this.$message({
+                message: err.msg,
+                type: 'error'
+              });
             });
           } else {
             console.log('error submit!!');
