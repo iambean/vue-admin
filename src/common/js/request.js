@@ -28,16 +28,17 @@ export default function (command, method='get', params){
       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
       // 'Content-Type': 'multipart/form-data'
     };
-    //   let paramsArray = [];
-    //   params['service'] = command;
-    //   Object.keys(params).forEach(key=>paramsArray.push(key + '=' + params[key]));
-    // options.data = paramsArray.join('&');
-    options.body = function(fd){
-      Object.keys(params).forEach(key=>{
-        fd.append(key, params[key]);
+      let paramsArray = [];
+      Object.keys(params).forEach(key=> {
+        paramsArray.push(key + '=' + params[key])
       });
-      return fd;
-    }(new FormData());
+    options.body = paramsArray.join('&');
+    // options.body = function(fd){
+    //   Object.keys(params).forEach(key=>{
+    //     fd.append(key, params[key]);
+    //   });
+    //   return fd;
+    // }(new FormData());
 
   } else {
     let paramsArray = [];

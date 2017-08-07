@@ -6,8 +6,8 @@ let base = '';
 
 export const requestLogin = (name, pwd) => {
     return request('system.user.login', 'post', {
-        u_name : name,
-        u_password : pwd
+        'params[u_name]' : name,
+        'params[u_password]' : pwd
     });
     // return axios.post(`${base}/login`, params).then(res => res.data);
 };
