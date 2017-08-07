@@ -62,7 +62,7 @@
                             this.logining = false;
 
                             sessionStorage.setItem('user', JSON.stringify(user));
-                            this.$router.push({path: '/table'});
+                            this.$router.push({path: '/config'});
                         }, err => {
                             this.$message({
                                 message: err.msg,
