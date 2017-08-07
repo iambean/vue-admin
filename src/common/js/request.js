@@ -11,68 +11,76 @@ const BASE_URL = 'http://omsdev.egtest.cn/api.php';
 // //当前所有请求都是跨域的。
 // axios.defaults.withCredentials = true;
 
-export default function (command, method='get', params){
-  method = method.toLowerCase();
-  let url = '';
-  let options = {
-      method: method,
-      mode: 'cors',
-      redirect: 'follow',
-      credentials: 'include'
-  };
-
-  //post请求的参数作为K-V形式以form-data提交，get的参数为search params。
-  if(method === 'post'){
-    url = BASE_URL + '?service=' + command;
-    options.headers = {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-      // 'Content-Type': 'multipart/form-data'
+export default function (command, method = 'get', params) {
+    method = method.toLowerCase();
+    let url = '';
+    let options = {
+        method: method,
+        mode: 'cors',
+        redirect: 'follow',
+        credentials: 'include'
     };
-      let paramsArray = [];
-      Object.keys(params).forEach(key=> {
-        paramsArray.push(key + '=' + params[key])
-      });
-    options.body = paramsArray.join('&');
-    // options.body = function(fd){
-    //   Object.keys(params).forEach(key=>{
-    //     fd.append(key, params[key]);
-    //   });
-    //   return fd;
-    // }(new FormData());
 
-  } else {
-    let paramsArray = [];
-    params['service'] = command;
-    Object.keys(params).forEach(key=>paramsArray.push(key + '=' + params[key]));
-    url = BASE_URL + '?' + paramsArray.join('&');
-  }
+    //post请求的参数作为K-V形式以form-data提交，get的参数为search params。
+    if (method === 'post') {
+        url = BASE_URL + '?service=' + command;
+        options.headers = {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+            // 'Content-Type': 'multipart/form-data'
+        };
+        let paramsArray = [];
+        Object.keys(params).forEach(key => {
+            paramsArray.push(key + '=' + params[key])
+        });
+        options.body = paramsArray.join('&');
+        // options.body = function(fd){
+        //   Object.keys(params).forEach(key=>{
+        //     fd.append(key, params[key]);
+        //   });
+        //   return fd;
+        // }(new FormData());
 
-  // console.log("===");
-  return window.fetch(url, options).then(resp=>{
-    return resp.json();
-  });
+    } else {
+        let paramsArray = [];
+        params['service'] = command;
+        Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]));
+        url = BASE_URL + '?' + paramsArray.join('&');
+    }
 
-  // return axios
-  //   .get(PREFIX, {
-  //     params : {
-  //       'service': command
-  //     },
-  //     //当前所有请求都是跨域的。
-  //     withCredentials : true
-  //   })
-  //   .then(response=>{
-  //     let jsonData = response.data;
-  //     console.info(JSON.stringify(jsonData));
-  //     if(response.status === 200){
-  //
-  //       if(jsonData.code === 0){
-  //         console.log(jsonData.data);
-  //         Promise.resolve(jsonData.data);
-  //       }else{
-  //         Promise.reject('HTTP状态错误', response);
-  //       }
-  //     }else{
-  //       Promise.reject('HTTP状态错误', response);
-  //     }
-  //   })
+    // console.log("===");
+    return window.fetch(url, options).then(resp => {
+        return resp.json();
+    }).then(json=>{
+        if(+json.success === 1){
+            // Promise.resolve(json.data);
+            return json.data;
+        }else{
+            // throw new Error(json);
+            Promise.reject(json);
+        }
+    });
+
+    // return axios
+    //   .get(PREFIX, {
+    //     params : {
+    //       'service': command
+    //     },
+    //     //当前所有请求都是跨域的。
+    //     withCredentials : true
+    //   })
+    //   .then(response=>{
+    //     let jsonData = response.data;
+    //     console.info(JSON.stringify(jsonData));
+    //     if(response.status === 200){
+    //
+    //       if(jsonData.code === 0){
+    //         console.log(jsonData.data);
+    //         Promise.resolve(jsonData.data);
+    //       }else{
+    //         Promise.reject('HTTP状态错误', response);
+    //       }
+    //     }else{
+    //       Promise.reject('HTTP状态错误', response);
+    //     }
+    //   })
 };
