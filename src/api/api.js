@@ -1,8 +1,16 @@
 import axios from 'axios';
 
+import request from '../common/js/request';
+
 let base = '';
 
-export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data); };
+export const requestLogin = (name, pwd) => {
+    return request('system.user.login', 'post', {
+        u_name : name,
+        u_password : pwd
+    });
+    // return axios.post(`${base}/login`, params).then(res => res.data);
+};
 
 export const getUserList = params => { return axios.get(`${base}/user/list`, { params: params }); };
 
