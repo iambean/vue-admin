@@ -150,5 +150,7 @@ export default {
       });
     });
 
+    //招投标用户列表
+    mock.onPost('http://omsdev.egtest.cn/api.php?service=system.admin.bidOutuser')
   }
 };

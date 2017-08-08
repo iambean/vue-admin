@@ -7,6 +7,9 @@
                     <el-input v-model="filters.keyword" placeholder="关键字"></el-input>
                 </el-form-item>
                 <el-form-item>
+                    <el-button type="primary" @click="getList">查询</el-button>
+                </el-form-item>
+                <el-form-item>
                     <el-button type="primary" @click="handleAdd">新增</el-button>
                 </el-form-item>
             </el-form>

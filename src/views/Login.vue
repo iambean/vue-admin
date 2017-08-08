@@ -46,33 +46,28 @@
                 this.$refs.ruleForm2.resetFields();
             },
             handleSubmit2(ev) {
-                var _this = this;
                 this.$refs.ruleForm2.validate((valid) => {
-                    if (valid) {
-                        //_this.$router.replace('/table');
-                        this.logining = true;
-                        let uname = this.ruleForm2.account;
-                        let pwd = this.ruleForm2.checkPass;
-                        //NProgress.start();
-//                        var loginParams = {
-//                          username: this.ruleForm2.account,
-//                          password: this.ruleForm2.checkPass
-//                        };
-                        requestLogin(uname, pwd).then(user => {
-                            this.logining = false;
-
-                            sessionStorage.setItem('user', JSON.stringify(user));
-                            this.$router.push({path: '/config'});
-                        }, err => {
-                            this.$message({
-                                message: err.msg,
-                                type: 'error'
-                            });
-                        });
-                    } else {
+                    if(!valid){
                         console.log('error submit!!');
                         return false;
                     }
+                    //_this.$router.replace('/table');
+                    this.logining = true;
+                    let uname = this.ruleForm2.account;
+                    let pwd = this.ruleForm2.checkPass;
+
+                    requestLogin(uname, pwd).then(user => {
+                        this.logining = false;
+
+                        sessionStorage.setItem('user', JSON.stringify(user));
+                        this.$router.push({path: '/config'});
+                    }, err => {
+                        console.log(err);
+                        this.$message({
+                            message: err.msg,
+                            type: 'error'
+                        });
+                    });
                 });
             }
         }

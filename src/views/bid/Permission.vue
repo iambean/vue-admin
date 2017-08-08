@@ -7,6 +7,9 @@
                     <el-input v-model="filters.keyword" placeholder="关键字"></el-input>
                 </el-form-item>
                 <el-form-item>
+                    <el-button type="primary" @click="getList">查询</el-button>
+                </el-form-item>
+                <el-form-item>
                     <el-button type="primary" @click="handleAdd">新增</el-button>
                 </el-form-item>
             </el-form>
@@ -14,11 +17,17 @@
 
         <!--列表-->
         <el-table :data="list" highlight-current-row v-loading="listLoading" style="width:100%;">
-            <el-table-column v-show="false" prop="id" width="1"></el-table-column>
-            <el-table-column prop="e_name" label="公司名称" width="360" sortable></el-table-column>
-            <el-table-column prop="e_bid_addr" label="公司地址" width="450" sortable></el-table-column>
-            <el-table-column prop="e_status" label="状态" :formatter="formatStatus" width="400" sortable></el-table-column>
-            <el-table-column label="操作" width="300">
+            <!--<el-table-column v-show="false" prop="u_id" width="1"></el-table-column>-->
+            <el-table-column prop="u_realname" label="姓名" width="120" sortable></el-table-column>
+            <el-table-column prop="r_role" label=" 标题" width="250" sortable></el-table-column>
+            <el-table-column prop="r_role_txt" label="发起人" :formatter="formatStatus" width="150"></el-table-column>
+            <el-table-column prop="bid_permission" label="权限" :formatter="formatStatus" width="120" ></el-table-column>
+            <el-table-column prop="bid_type" label="访问权限" :formatter="formatStatus" width="120" ></el-table-column>
+            <el-table-column prop="leadership" label="短信通知" :formatter="formatStatus" width="120" ></el-table-column>
+            <el-table-column prop="sms_approve" label="消息审批" :formatter="formatStatus" width="120"></el-table-column>
+            <el-table-column prop="white" label="白名单" :formatter="formatStatus" width="200"></el-table-column>
+            <el-table-column prop="leader" label="投标单位审批" :formatter="formatStatus" width="120"></el-table-column>
+            <el-table-column label="操作" width="200">
                 <template scope="scope">
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <!--<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>-->
