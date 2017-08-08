@@ -138,10 +138,7 @@
                 getBidUserList(this.filters.keyword).then(data => {
                     this.list = data.list;
                     this.pageSize = data.page.pageSize;
-                    this.total = Math.ceil(data.page.total/data.page.pageSize);
-//                    debugger
-//                    this.total = res.data.total;
-//                    this.users = res.data.users;
+                    this.total = +data.page.total;
                     this.listLoading = false;
                     //NProgress.done();
                 });
@@ -172,7 +169,9 @@
                     if (!valid) {
                         return false;
                     }
+                    console.log(JSON.stringify(this.formDataset.bid_permission, null, 4));
                     return console.table(this.formDataset.bid_permission);
+
                     this.$confirm('确认提交吗？', '提示', {}).then(() => {
                         this.editLoading = true;
                         let para = Object.assign({}, this.formDataset);

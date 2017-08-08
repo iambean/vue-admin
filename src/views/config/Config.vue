@@ -113,12 +113,9 @@
                         };
                     });
                     this.pageSize = data.page.pageSize;
-                    this.total = Math.ceil(data.page.total/data.page.pageSize);
-//                    debugger
-//                    this.total = res.data.total;
-//                    this.users = res.data.users;
+                    this.total = +data.page.total;
+                    console.log(this.total, this.pageSize);
                     this.listLoading = false;
-                    //NProgress.done();
                 });
             },
 

@@ -92,7 +92,7 @@
                     console.log(data.list);
                     this.list = data.list;
                     this.pageSize = data.page.pageSize;
-                    this.total = Math.ceil(data.page.total/data.page.pageSize);
+                    this.total = +data.page.total;
                     this.listLoading = false;
                 });
             },
