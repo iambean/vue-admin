@@ -75,7 +75,7 @@
 	export default {
 		data() {
 			return {
-				sysName:'统一办公运营平台',
+				sysName:'OA运营系统',
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',

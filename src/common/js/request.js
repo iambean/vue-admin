@@ -55,6 +55,7 @@ export default function (command, method = 'get', params) {
             // Promise.resolve(json.data);
             return json.data;
         }else{
+            console.info("===={{{", json)
             // throw new Error(json);
             Promise.reject(json);
         }

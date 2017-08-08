@@ -12,7 +12,7 @@
         <el-form-item style="width:100%;">
             <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">登录
             </el-button>
-            <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
+            <!--<el-button style="width:40%;float:right;" @click.native.prevent="handleReset2">重置</el-button>-->
         </el-form-item>
     </el-form>
 </template>
@@ -62,12 +62,14 @@
                         sessionStorage.setItem('user', JSON.stringify(user));
                         this.$router.push({path: '/config'});
                     }, err => {
-                        console.log(err);
+                        console.log(err, '======--');
                         this.$message({
                             message: err.msg,
                             type: 'error'
                         });
-                    });
+                    }).catch(e=>{
+                        console.info(':::', e)
+                    })
                 });
             }
         }
