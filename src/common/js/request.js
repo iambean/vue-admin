@@ -55,7 +55,11 @@ export default function (command, method = 'get', params) {
             // Promise.resolve(json.data);
             return json.data;
         }else{
-            console.info("===={{{", json)
+            console.info("===={{{", json);
+            if(json.code === 10001){
+                window.vueInstance.$router.push({path: '/login'});
+                // this.$router.push({path: '/login'});
+            }
             // throw new Error(json);
             Promise.reject(json);
         }

@@ -43,7 +43,8 @@ router.beforeEach((to, from, next) => {
 //NProgress.done();
 //});
 
-new Vue({
+//把实例全局跑出来，因为在其他地方调用
+window.vueInstance = new Vue({
   //el: '#app',
   //template: '<App/>',
   router,

@@ -19,7 +19,6 @@
 
 <script>
     import {requestLogin} from '../api/api';
-    //import NProgress from 'nprogress'
     export default {
         data() {
             return {
@@ -58,11 +57,9 @@
 
                     requestLogin(uname, pwd).then(user => {
                         this.logining = false;
-
                         sessionStorage.setItem('user', JSON.stringify(user));
                         this.$router.push({path: '/config'});
                     }, err => {
-                        console.log(err, '======--');
                         this.$message({
                             message: err.msg,
                             type: 'error'
