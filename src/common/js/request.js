@@ -53,15 +53,18 @@ export default function (command, method = 'get', params) {
     }).then(json=>{
         if(+json.success === 1){
             // Promise.resolve(json.data);
-            return json.data;
+            return Promise.resolve(json.data);
+            // return json.data;
         }else{
             console.info("===={{{", json);
-            if(json.code === 10001){
-                window.vueInstance.$router.push({path: '/login'});
+            let router = window.vueInstance.$router;
+            if(json.code === 10001 && router.path !== '/login'){
+                // debugger;
+                router.push({path: '/login'});
                 // this.$router.push({path: '/login'});
             }
-            // throw new Error(json);
-            Promise.reject(json);
+            return Promise.reject(json);
+            // throw new Error({msg : 'aaaaaaaaaa'});
         }
     });
 

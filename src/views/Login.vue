@@ -60,12 +60,11 @@
                         sessionStorage.setItem('user', JSON.stringify(user));
                         this.$router.push({path: '/config'});
                     }, err => {
+                        this.logining = false;
                         this.$message({
                             message: err.msg,
                             type: 'error'
                         });
-                    }).catch(e=>{
-                        console.info(':::', e)
                     })
                 });
             }

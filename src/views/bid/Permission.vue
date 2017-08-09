@@ -21,6 +21,7 @@
             <el-table-column type="expand">
                 <template scope="props">
                     <el-table :data="props.row.bid_permission" :row-class-name="tableRowClassName" style="width:100%;">
+                        <el-table-column prop="bid_type" label="类别" :formatter="_fmt"></el-table-column>
                         <el-table-column prop="bid_type" label="访问权限" :formatter="_fmt"></el-table-column>
                         <el-table-column prop="leadership" label="短信通知" :formatter="_fmt"></el-table-column>
                         <el-table-column prop="sms_approve" label="消息审批" :formatter="_fmt"></el-table-column>
@@ -130,13 +131,25 @@
                 this.getList();
             },
             tableRowClassName(row, index){
-                return index % 2 ? 'info-row' : 'positive-row';
+                return index % 2 ? 'corlorful-row-1' : 'corlorful-row-2';
             },
             //获取用户列表
             getList() {
                 this.listLoading = true;
                 getBidUserList(this.filters.keyword).then(data => {
-                    this.list = data.list;
+                    //TODO:后台数据稍稍有点恶心(廖远忠的锅😜)，整理一下。
+                    this.list = data.list.map(user=>{
+                        let permission = user.bid_permission,
+                            titles = user.titles;
+                        permission.forEach(p=>{
+                            p.items = p.items.map((i, index)=>{
+                                return { value : i, title :  titles[index]};
+                            });
+                        });
+                        delete user.titles;
+                        return user;
+                    });
+                    console.info(this.list[0].bid_permission);
                     this.pageSize = data.page.pageSize;
                     this.total = +data.page.total;
                     this.listLoading = false;
@@ -196,12 +209,12 @@
 
 </script>
 
-<style scoped>
-    .el-table .info-row {
-        background: #c9e5f5;
+<style>
+    .el-table .corlorful-row-1 {
+        background: #e5f5db;
     }
 
-    .el-table .positive-row {
-        background: #e2f0e4;
+    .el-table .corlorful-row-2 {
+        background: #a9aedd;
     }
 </style>
