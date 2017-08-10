@@ -23,7 +23,7 @@
             <el-table-column prop="e_status" label="状态" :formatter="formatStatus" width="400" sortable></el-table-column>
             <el-table-column label="操作" width="300">
                 <template scope="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button type="primary" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <!--<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>-->
                 </template>
             </el-table-column>
@@ -105,7 +105,7 @@
             //获取用户列表
             getList() {
                 this.listLoading = true;
-                getContractAwardList(this.filters.keyword).then(data => {
+                getContractAwardList(this.filters.keyword, this.page).then(data => {
                     this.list = data.list;
                     this.pageSize = data.page.pageSize;
                     this.total = +data.page.total;

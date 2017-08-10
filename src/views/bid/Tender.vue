@@ -20,7 +20,7 @@
             <el-table-column prop="c_phone" label="联系人电话" width="600" sortable></el-table-column>
             <el-table-column label="操作" width="400">
                 <template scope="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button type="primary" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <!--<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>-->
                 </template>
             </el-table-column>
@@ -88,7 +88,7 @@
             //获取用户列表
             getList() {
                 this.listLoading = true;
-                getTenderList(this.filters.p_number).then(data => {
+                getTenderList(this.filters.p_number, this.page).then(data => {
                     console.log(data.list);
                     this.list = data.list;
                     this.pageSize = data.page.pageSize;

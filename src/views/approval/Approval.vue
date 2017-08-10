@@ -33,11 +33,11 @@
             <el-table-column prop="content"             label="错误信息" width="280"></el-table-column>
             <el-table-column label="操作" width="220">
                 <template scope="scope">
-                    <el-button size="small" v-if="+scope.row.is_sign_err === 1"
+                    <el-button type="primary" size="small" v-if="+scope.row.is_sign_err === 1"
                                @click="resetSignature(scope.row)">
                         签名重置
                     </el-button>
-                    <el-button size="small" @click="reCompose(scope.$index, scope.row)">重新合成</el-button>
+                    <el-button type="primary" size="small" @click="reCompose(scope.$index, scope.row)">重新合成</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -90,7 +90,7 @@
             //获取用户列表
             getList() {
                 this.listLoading = true;
-                getApprovalList(this.filters.keyword).then(data => {
+                getApprovalList(this.filters.keyword, this.page).then(data => {
                     console.log(data);
                     this.list = data.list;
                     this.pageSize = data.page.pageSize;

@@ -21,27 +21,26 @@
             <el-table-column type="expand">
                 <template scope="props">
                     <el-table :data="props.row.bid_permission" :row-class-name="tableRowClassName" style="width:100%;">
-                        <el-table-column prop="name" label="类别" :formatter="_fmt"></el-table-column>
-                        <el-table-column v-for="item in items" prop="name" :label="item"
-                                         key="item"></el-table-column>
-
-                        <!--<el-table-column prop="key_1" :label="value_1" :formatter="_fmt"></el-table-column>-->
-                        <!--<el-table-column prop="key_2" :label="value_2" :formatter="_fmt"></el-table-column>-->
-                        <!--<el-table-column prop="key_3" :label="value_3" :formatter="_fmt"></el-table-column>-->
-                        <!--<el-table-column prop="key_4" :label="value_4" :formatter="_fmt"></el-table-column>-->
-                        <!--<el-table-column prop="key_5" :label="value_5" :formatter="_fmt"></el-table-column>-->
+                        <el-table-column prop="name" label="类别"></el-table-column>
+                        <!--<el-table-column v-for="item in props.row.bid_permission[props.$index]" prop="name" :label="item"-->
+                                         <!--key="item"></el-table-column>-->
+                        <el-table-column prop="value_0" label="访问权限" :formatter="_fmt"></el-table-column>
+                        <el-table-column prop="value_1" label="短信通知" :formatter="_fmt"></el-table-column>
+                        <el-table-column prop="value_2" label="消息审批" :formatter="_fmt"></el-table-column>
+                        <el-table-column prop="value_3" label="白名单" :formatter="_fmt"></el-table-column>
+                        <el-table-column prop="value_4" label="投标单位审批" :formatter="_fmt"></el-table-column>
                     </el-table>
                 </template>
             </el-table-column>
             <el-table-column prop="u_realname" label="姓名" sortable></el-table-column>
             <el-table-column prop="r_role" label=" 标题" sortable></el-table-column>
             <el-table-column prop="r_role_txt" label="发起人"></el-table-column>
-            <el-table-column label="操作">
-                <template scope="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <!--<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>-->
-                </template>
-            </el-table-column>
+            <!--<el-table-column label="操作">-->
+                <!--<template scope="scope">-->
+                    <!--<el-button type="primary" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
+                    <!--&lt;!&ndash;<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>&ndash;&gt;-->
+                <!--</template>-->
+            <!--</el-table-column>-->
         </el-table>
 
         <!--工具条-->
@@ -56,34 +55,34 @@
         <el-dialog :title="'修改【'+formDataset.u_realname+'】的权限:'" v-model="formVisible" :close-on-click-modal="false">
             <el-form :model="formDataset" label-width="80px" ref="editForm">
                 <el-table :data="formDataset.bid_permission" :row-class-name="tableRowClassName" style="width:100%;">
-                    <el-table-column prop="key" label="类别" width="120"></el-table-column>
+                    <el-table-column prop="name" label="类别" width="120"></el-table-column>
                     <el-table-column label="访问权限">
                         <template scope="scope">
-                            <el-checkbox v-model="scope.row.bid_type.status" :true-label="1"
+                            <el-checkbox v-model="scope.row.value_0" :true-label="1"
                                          :false-label="0"></el-checkbox>
                         </template>
                     </el-table-column>
                     <el-table-column label="短信通知">
                         <template scope="scope">
-                            <el-checkbox v-model="scope.row.leadership.status" :true-label="1"
+                            <el-checkbox v-model="scope.row.value_1" :true-label="1"
                                          :false-label="0"></el-checkbox>
                         </template>
                     </el-table-column>
                     <el-table-column label="消息审批">
                         <template scope="scope">
-                            <el-checkbox v-model="scope.row.sms_approve.status" :true-label="1"
+                            <el-checkbox v-model="scope.row.value_2" :true-label="1"
                                          :false-label="0"></el-checkbox>
                         </template>
                     </el-table-column>
                     <el-table-column label="白名单">
                         <template scope="scope">
-                            <el-checkbox v-model="scope.row.white.status" :true-label="1"
+                            <el-checkbox v-model="scope.row.value_3" :true-label="1"
                                          :false-label="0"></el-checkbox>
                         </template>
                     </el-table-column>
                     <el-table-column label="投标单位审批">
                         <template scope="scope">
-                            <el-checkbox v-model="scope.row.leader.status" :true-label="1"
+                            <el-checkbox v-model="scope.row.value_4" :true-label="1"
                                          :false-label="0"></el-checkbox>
                         </template>
                     </el-table-column>
@@ -144,15 +143,30 @@
             //获取用户列表
             getList() {
                 this.listLoading = true;
-                getBidUserList(this.filters.keyword).then(data => {
-                    //TODO:后台数据稍稍有点恶心(廖远忠的锅😜)，整理一下。
+                getBidUserList(this.filters.keyword, this.page).then(data => {
+//                    this.list = data.list.map(user => {
+//                        let permission = user.bid_permission,
+//                            titles = user.titles;
+//                        permission.forEach(p => {
+//                            p.items = p.items.map((i, index) => {
+//                                return {value: i, title: titles[index]};
+//                            });
+//                        });
+//                        delete user.titles;
+//                        return user;
+//                    });
                     this.list = data.list.map(user => {
                         let permission = user.bid_permission,
                             titles = user.titles;
                         permission.forEach(p => {
-                            p.items = p.items.map((i, index) => {
-                                return {value: i, title: titles[index]};
+                            p.items.forEach((value , index) => {
+                                p['value_' + index] = value;
+                                p['title_' + index] = titles[index];
                             });
+                            delete p.items;
+//                            p.items = p.items.map((i, index) => {
+//                                return {value: i, title: titles[index]};
+//                            });
                         });
                         delete user.titles;
                         return user;
@@ -184,15 +198,15 @@
                     e_status: ''
                 };
             },
-            //编辑和新增
+            //编辑
             formSubmit() {
                 let form = this.$refs.editForm;
                 form.validate((valid) => {
                     if (!valid) {
                         return false;
                     }
-                    console.log(JSON.stringify(this.formDataset.bid_permission, null, 4));
-                    return console.table(this.formDataset.bid_permission);
+                    console.log(JSON.stringify(this.formDataset, null, 4));
+                    return console.table(this.formDataset);
 
                     this.$confirm('确认提交吗？', '提示', {}).then(() => {
                         this.editLoading = true;
@@ -220,10 +234,10 @@
 
 <style>
     .el-table .corlorful-row-1 {
-        background: #e5f5db;
+        background: #e7e8e6;
     }
 
     .el-table .corlorful-row-2 {
-        background: #a9aedd;
+        background: #bdc0c3;
     }
 </style>

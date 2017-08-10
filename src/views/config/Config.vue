@@ -24,7 +24,7 @@
             <el-table-column prop="desc" label="描述" width="500" sortable></el-table-column>
             <el-table-column label="操作" width="150">
                 <template scope="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button type="primary" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -102,7 +102,7 @@
             //获取用户列表
             getList() {
                 this.listLoading = true;
-                getConfigList(this.filters.keyword).then(data => {
+                getConfigList(this.filters.keyword, this.page).then(data => {
                     console.log(data);
                     this.list = data.list.map(item => {
                         return {
