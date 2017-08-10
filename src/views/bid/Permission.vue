@@ -20,16 +20,61 @@
             <!--<el-table-column v-show="false" prop="u_id" width="1"></el-table-column>-->
             <el-table-column type="expand">
                 <template scope="props">
-                    <el-table :data="props.row.bid_permission" :row-class-name="tableRowClassName" style="width:100%;">
-                        <el-table-column prop="name" label="类别"></el-table-column>
-                        <!--<el-table-column v-for="item in props.row.bid_permission[props.$index]" prop="name" :label="item"-->
-                                         <!--key="item"></el-table-column>-->
-                        <el-table-column prop="value_0" label="访问权限" :formatter="_fmt"></el-table-column>
-                        <el-table-column prop="value_1" label="短信通知" :formatter="_fmt"></el-table-column>
-                        <el-table-column prop="value_2" label="消息审批" :formatter="_fmt"></el-table-column>
-                        <el-table-column prop="value_3" label="白名单" :formatter="_fmt"></el-table-column>
-                        <el-table-column prop="value_4" label="投标单位审批" :formatter="_fmt"></el-table-column>
-                    </el-table>
+
+                    <!--编辑界面-->
+                    <!--<el-dialog :title="'修改【'+formDataset.u_realname+'】的权限:'" v-model="formVisible" :close-on-click-modal="false">-->
+                        <el-form :model="props.row.bid_permission" label-width="80px" ref="editForm">
+                            <el-table :data="formDataset.bid_permission" :row-class-name="tableRowClassName" style="width:100%;">
+                                <el-table-column prop="name" label="类别" width="120"></el-table-column>
+                                <el-table-column label="访问权限">
+                                    <template scope="scope">
+                                        <el-checkbox v-model="scope.row.value_0" :true-label="1"
+                                                     :false-label="0"></el-checkbox>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="短信通知">
+                                    <template scope="scope">
+                                        <el-checkbox v-model="scope.row.value_1" :true-label="1"
+                                                     :false-label="0"></el-checkbox>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="消息审批">
+                                    <template scope="scope">
+                                        <el-checkbox v-model="scope.row.value_2" :true-label="1"
+                                                     :false-label="0"></el-checkbox>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="白名单">
+                                    <template scope="scope">
+                                        <el-checkbox v-model="scope.row.value_3" :true-label="1"
+                                                     :false-label="0"></el-checkbox>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="投标单位审批">
+                                    <template scope="scope">
+                                        <el-checkbox v-model="scope.row.value_4" :true-label="1"
+                                                     :false-label="0"></el-checkbox>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </el-form>
+
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @click.native="formVisible = false">取消</el-button>
+                            <el-button type="primary" @click.native="formSubmit" :loading="editLoading">提交</el-button>
+                        </div>
+                    <!--</el-dialog>-->
+
+                    <!--<el-table :data="props.row.bid_permission" :row-class-name="tableRowClassName" style="width:100%;">-->
+                        <!--<el-table-column prop="name" label="类别"></el-table-column>-->
+                        <!--&lt;!&ndash;<el-table-column v-for="item in props.row.bid_permission[props.$index]" prop="name" :label="item"&ndash;&gt;-->
+                                         <!--&lt;!&ndash;key="item"></el-table-column>&ndash;&gt;-->
+                        <!--<el-table-column prop="value_0" label="访问权限" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="value_1" label="短信通知" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="value_2" label="消息审批" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="value_3" label="白名单" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="value_4" label="投标单位审批" :formatter="_fmt"></el-table-column>-->
+                    <!--</el-table>-->
                 </template>
             </el-table-column>
             <el-table-column prop="u_realname" label="姓名" sortable></el-table-column>
@@ -50,50 +95,6 @@
                            :total="total" style="float:right;">
             </el-pagination>
         </el-col>
-
-        <!--编辑界面-->
-        <el-dialog :title="'修改【'+formDataset.u_realname+'】的权限:'" v-model="formVisible" :close-on-click-modal="false">
-            <el-form :model="formDataset" label-width="80px" ref="editForm">
-                <el-table :data="formDataset.bid_permission" :row-class-name="tableRowClassName" style="width:100%;">
-                    <el-table-column prop="name" label="类别" width="120"></el-table-column>
-                    <el-table-column label="访问权限">
-                        <template scope="scope">
-                            <el-checkbox v-model="scope.row.value_0" :true-label="1"
-                                         :false-label="0"></el-checkbox>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="短信通知">
-                        <template scope="scope">
-                            <el-checkbox v-model="scope.row.value_1" :true-label="1"
-                                         :false-label="0"></el-checkbox>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="消息审批">
-                        <template scope="scope">
-                            <el-checkbox v-model="scope.row.value_2" :true-label="1"
-                                         :false-label="0"></el-checkbox>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="白名单">
-                        <template scope="scope">
-                            <el-checkbox v-model="scope.row.value_3" :true-label="1"
-                                         :false-label="0"></el-checkbox>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="投标单位审批">
-                        <template scope="scope">
-                            <el-checkbox v-model="scope.row.value_4" :true-label="1"
-                                         :false-label="0"></el-checkbox>
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </el-form>
-
-            <div slot="footer" class="dialog-footer">
-                <el-button @click.native="formVisible = false">取消</el-button>
-                <el-button type="primary" @click.native="formSubmit" :loading="editLoading">提交</el-button>
-            </div>
-        </el-dialog>
     </section>
 </template>
 
