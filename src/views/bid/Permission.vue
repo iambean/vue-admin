@@ -21,12 +21,12 @@
             <el-table-column type="expand">
                 <template scope="props">
                     <el-table :data="props.row.bid_permission" :row-class-name="tableRowClassName" style="width:100%;">
-                        <el-table-column prop="bid_type" label="类别" :formatter="_fmt"></el-table-column>
-                        <el-table-column prop="bid_type" label="访问权限" :formatter="_fmt"></el-table-column>
-                        <el-table-column prop="leadership" label="短信通知" :formatter="_fmt"></el-table-column>
-                        <el-table-column prop="sms_approve" label="消息审批" :formatter="_fmt"></el-table-column>
-                        <el-table-column prop="white" label="白名单" :formatter="_fmt"></el-table-column>
-                        <el-table-column prop="leader" label="投标单位审批" :formatter="_fmt"></el-table-column>
+                        <el-table-column prop="name" label="类别" :formatter="_fmt"></el-table-column>
+                        <!--<el-table-column prop="bid_type" label="访问权限" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="leadership" label="短信通知" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="sms_approve" label="消息审批" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="white" label="白名单" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="leader" label="投标单位审批" :formatter="_fmt"></el-table-column>-->
                     </el-table>
                 </template>
             </el-table-column>
