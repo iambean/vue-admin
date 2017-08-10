@@ -66,6 +66,10 @@ export default function (command, method = 'get', params) {
             return Promise.reject(json);
             // throw new Error({msg : 'aaaaaaaaaa'});
         }
+    }, ()=>{
+        return Promise.reject({
+            msg : '网络错误。'
+        });
     });
 
     // return axios

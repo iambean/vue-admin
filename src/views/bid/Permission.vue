@@ -22,17 +22,20 @@
                 <template scope="props">
                     <el-table :data="props.row.bid_permission" :row-class-name="tableRowClassName" style="width:100%;">
                         <el-table-column prop="name" label="类别" :formatter="_fmt"></el-table-column>
-                        <!--<el-table-column prop="bid_type" label="访问权限" :formatter="_fmt"></el-table-column>-->
-                        <!--<el-table-column prop="leadership" label="短信通知" :formatter="_fmt"></el-table-column>-->
-                        <!--<el-table-column prop="sms_approve" label="消息审批" :formatter="_fmt"></el-table-column>-->
-                        <!--<el-table-column prop="white" label="白名单" :formatter="_fmt"></el-table-column>-->
-                        <!--<el-table-column prop="leader" label="投标单位审批" :formatter="_fmt"></el-table-column>-->
+                        <el-table-column v-for="item in items" prop="name" :label="item"
+                                         key="item"></el-table-column>
+
+                        <!--<el-table-column prop="key_1" :label="value_1" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="key_2" :label="value_2" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="key_3" :label="value_3" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="key_4" :label="value_4" :formatter="_fmt"></el-table-column>-->
+                        <!--<el-table-column prop="key_5" :label="value_5" :formatter="_fmt"></el-table-column>-->
                     </el-table>
                 </template>
             </el-table-column>
             <el-table-column prop="u_realname" label="姓名" sortable></el-table-column>
             <el-table-column prop="r_role" label=" 标题" sortable></el-table-column>
-            <el-table-column prop="r_role_txt" label="发起人" ></el-table-column>
+            <el-table-column prop="r_role_txt" label="发起人"></el-table-column>
             <el-table-column label="操作">
                 <template scope="scope">
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -56,27 +59,32 @@
                     <el-table-column prop="key" label="类别" width="120"></el-table-column>
                     <el-table-column label="访问权限">
                         <template scope="scope">
-                            <el-checkbox v-model="scope.row.bid_type.status" :true-label="1" :false-label="0"></el-checkbox>
+                            <el-checkbox v-model="scope.row.bid_type.status" :true-label="1"
+                                         :false-label="0"></el-checkbox>
                         </template>
                     </el-table-column>
-                    <el-table-column label="短信通知" >
+                    <el-table-column label="短信通知">
                         <template scope="scope">
-                            <el-checkbox v-model="scope.row.leadership.status" :true-label="1" :false-label="0"></el-checkbox>
+                            <el-checkbox v-model="scope.row.leadership.status" :true-label="1"
+                                         :false-label="0"></el-checkbox>
                         </template>
                     </el-table-column>
-                    <el-table-column label="消息审批" >
+                    <el-table-column label="消息审批">
                         <template scope="scope">
-                            <el-checkbox v-model="scope.row.sms_approve.status" :true-label="1" :false-label="0"></el-checkbox>
+                            <el-checkbox v-model="scope.row.sms_approve.status" :true-label="1"
+                                         :false-label="0"></el-checkbox>
                         </template>
                     </el-table-column>
-                    <el-table-column label="白名单" >
+                    <el-table-column label="白名单">
                         <template scope="scope">
-                            <el-checkbox v-model="scope.row.white.status" :true-label="1" :false-label="0"></el-checkbox>
+                            <el-checkbox v-model="scope.row.white.status" :true-label="1"
+                                         :false-label="0"></el-checkbox>
                         </template>
                     </el-table-column>
                     <el-table-column label="投标单位审批">
                         <template scope="scope">
-                            <el-checkbox v-model="scope.row.leader.status" :true-label="1" :false-label="0"></el-checkbox>
+                            <el-checkbox v-model="scope.row.leader.status" :true-label="1"
+                                         :false-label="0"></el-checkbox>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -102,7 +110,7 @@
                 list: [],
                 total: 0,
                 page: 1,
-                pageSize : 10,
+                pageSize: 10,
                 listLoading: false,
                 sels: [],//列表选中列
 
@@ -110,18 +118,18 @@
                 editLoading: false,
                 //编辑界面数据
                 formDataset: {
-                    e_id : -1,
-                    e_name : '',
-                    e_bid_addr : '',
-                    e_status : ''
+                    e_id: -1,
+                    e_name: '',
+                    e_bid_addr: '',
+                    e_status: ''
                 }
             }
         },
         computed: {
-            num2bool (num){
+            num2bool(num) {
                 return !!num;
             },
-            bool2num (value){
+            bool2num(value) {
                 return +value;
             }
         },
@@ -130,7 +138,7 @@
                 this.page = val;
                 this.getList();
             },
-            tableRowClassName(row, index){
+            tableRowClassName(row, index) {
                 return index % 2 ? 'corlorful-row-1' : 'corlorful-row-2';
             },
             //获取用户列表
@@ -138,12 +146,12 @@
                 this.listLoading = true;
                 getBidUserList(this.filters.keyword).then(data => {
                     //TODO:后台数据稍稍有点恶心(廖远忠的锅😜)，整理一下。
-                    this.list = data.list.map(user=>{
+                    this.list = data.list.map(user => {
                         let permission = user.bid_permission,
                             titles = user.titles;
-                        permission.forEach(p=>{
-                            p.items = p.items.map((i, index)=>{
-                                return { value : i, title :  titles[index]};
+                        permission.forEach(p => {
+                            p.items = p.items.map((i, index) => {
+                                return {value: i, title: titles[index]};
                             });
                         });
                         delete user.titles;
@@ -156,11 +164,12 @@
                     //NProgress.done();
                 });
             },
-            _fmt (row){
+            _fmt(row) {
+//                console.log(arguments);
                 return +row.status ? '有' : '无';
             },
             //显示编辑界面
-            handleEdit (index, row) {
+            handleEdit(index, row) {
                 this.formVisible = true;
                 this.formDataset = Object.assign({}, row);
                 console.info(this.formDataset, "===========:");
@@ -169,14 +178,14 @@
             handleAdd: function () {
                 this.formVisible = true;
                 this.formDataset = {
-                    e_id : 0,
-                    e_name : '',
-                    e_bid_addr : '',
-                    e_status : ''
+                    e_id: 0,
+                    e_name: '',
+                    e_bid_addr: '',
+                    e_status: ''
                 };
             },
             //编辑和新增
-            formSubmit (){
+            formSubmit() {
                 let form = this.$refs.editForm;
                 form.validate((valid) => {
                     if (!valid) {
