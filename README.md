@@ -49,6 +49,12 @@ You can change theme by
 ![theme-blue](https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/rec-demo.gif)
 ![theme-green](https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/theme-green.png)
 
+# 二次开发中的笔记和资料：
++ [element-ui table](https://segmentfault.com/q/1010000009130479/a-1020000009132792)
++ [Element分析（组件篇）——TableColumn](http://www.jianshu.com/p/60f3dcf3c1b4)
++ [mock fetch](http://blog.csdn.net/ZhangYaBo_Code/article/details/73494352)
++ [elementui中的table怎样实现列头通过参数配置，而不是在文件中写死？](https://segmentfault.com/q/1010000008780378/a-1020000008780421/revision)
+
 # Browser support
 
 Modern browsers and IE 10+.

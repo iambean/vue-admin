@@ -24,39 +24,51 @@
                     <!--编辑界面-->
                     <!--<el-dialog :title="'修改【'+formDataset.u_realname+'】的权限:'" v-model="formVisible" :close-on-click-modal="false">-->
                         <el-form :model="props.row.bid_permission" label-width="80px" ref="editForm">
-                            <el-table :data="formDataset.bid_permission" :row-class-name="tableRowClassName" style="width:100%;">
-                                <el-table-column prop="name" label="类别" width="120"></el-table-column>
-                                <el-table-column label="访问权限">
-                                    <template scope="scope">
-                                        <el-checkbox v-model="scope.row.value_0" :true-label="1"
-                                                     :false-label="0"></el-checkbox>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column label="短信通知">
-                                    <template scope="scope">
-                                        <el-checkbox v-model="scope.row.value_1" :true-label="1"
-                                                     :false-label="0"></el-checkbox>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column label="消息审批">
-                                    <template scope="scope">
-                                        <el-checkbox v-model="scope.row.value_2" :true-label="1"
-                                                     :false-label="0"></el-checkbox>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column label="白名单">
-                                    <template scope="scope">
-                                        <el-checkbox v-model="scope.row.value_3" :true-label="1"
-                                                     :false-label="0"></el-checkbox>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column label="投标单位审批">
-                                    <template scope="scope">
-                                        <el-checkbox v-model="scope.row.value_4" :true-label="1"
-                                                     :false-label="0"></el-checkbox>
-                                    </template>
-                                </el-table-column>
-                            </el-table>
+                            <template scope="scope">
+                                <el-checkbox v-model="scope.row.value_0" :true-label="1"
+                                             :false-label="0"></el-checkbox>
+                                <el-checkbox v-model="scope.row.value_0" :true-label="1"
+                                             :false-label="0"></el-checkbox>
+                                <el-checkbox v-model="scope.row.value_0" :true-label="1"
+                                             :false-label="0"></el-checkbox>
+                                <el-checkbox v-model="scope.row.value_0" :true-label="1"
+                                             :false-label="0"></el-checkbox>
+                                <el-checkbox v-model="scope.row.value_0" :true-label="1"
+                                             :false-label="0"></el-checkbox>
+                            </template>
+                            <!--<el-table :data="formDataset.bid_permission" :row-class-name="tableRowClassName" style="width:100%;">-->
+                                <!--<el-table-column prop="name" label="类别" width="120"></el-table-column>-->
+                                <!--<el-table-column label="访问权限">-->
+                                    <!--<template scope="scope">-->
+                                        <!--<el-checkbox v-model="scope.row.value_0" :true-label="1"-->
+                                                     <!--:false-label="0"></el-checkbox>-->
+                                    <!--</template>-->
+                                <!--</el-table-column>-->
+                                <!--<el-table-column label="短信通知">-->
+                                    <!--<template scope="scope">-->
+                                        <!--<el-checkbox v-model="scope.row.value_1" :true-label="1"-->
+                                                     <!--:false-label="0"></el-checkbox>-->
+                                    <!--</template>-->
+                                <!--</el-table-column>-->
+                                <!--<el-table-column label="消息审批">-->
+                                    <!--<template scope="scope">-->
+                                        <!--<el-checkbox v-model="scope.row.value_2" :true-label="1"-->
+                                                     <!--:false-label="0"></el-checkbox>-->
+                                    <!--</template>-->
+                                <!--</el-table-column>-->
+                                <!--<el-table-column label="白名单">-->
+                                    <!--<template scope="scope">-->
+                                        <!--<el-checkbox v-model="scope.row.value_3" :true-label="1"-->
+                                                     <!--:false-label="0"></el-checkbox>-->
+                                    <!--</template>-->
+                                <!--</el-table-column>-->
+                                <!--<el-table-column label="投标单位审批">-->
+                                    <!--<template scope="scope">-->
+                                        <!--<el-checkbox v-model="scope.row.value_4" :true-label="1"-->
+                                                     <!--:false-label="0"></el-checkbox>-->
+                                    <!--</template>-->
+                                <!--</el-table-column>-->
+                            <!--</el-table>-->
                         </el-form>
 
                         <div slot="footer" class="dialog-footer">
@@ -145,13 +157,18 @@
             getList() {
                 this.listLoading = true;
                 getBidUserList(this.filters.keyword, this.page).then(data => {
-//                    this.list = data.list.map(user => {
+//                    this.columns = data.list[0]
+//                    this.listData = data.list.map(user => {
 //                        let permission = user.bid_permission,
 //                            titles = user.titles;
 //                        permission.forEach(p => {
-//                            p.items = p.items.map((i, index) => {
-//                                return {value: i, title: titles[index]};
+//                            p.items.forEach((i , index)=>{
+//                                p[titles[index]] = i;
 //                            });
+//                            delete p.items;
+////                            p.items = p.items.map((i, index) => {
+////                                return {value: i, title: titles[index]};
+////                            });
 //                        });
 //                        delete user.titles;
 //                        return user;
@@ -162,7 +179,7 @@
                         permission.forEach(p => {
                             p.items.forEach((value , index) => {
                                 p['value_' + index] = value;
-                                p['title_' + index] = titles[index];
+//                                p['title_' + index] = titles[index];
                             });
                             delete p.items;
 //                            p.items = p.items.map((i, index) => {

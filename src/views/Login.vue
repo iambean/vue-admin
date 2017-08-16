@@ -1,7 +1,7 @@
 <template>
     <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px"
              class="demo-ruleForm login-container">
-        <h3 class="title">系统登录(OA系统账号密码)</h3>
+        <h3 class="title">系统登录(OA系统账号密码)X</h3>
         <el-form-item prop="account">
             <el-input type="text" v-model="ruleForm2.account" auto-complete="off" placeholder="账号"></el-input>
         </el-form-item>
@@ -21,6 +21,7 @@
     import {requestLogin} from '../api/api';
     export default {
         data() {
+            console.log('');
             return {
                 logining: false,
                 ruleForm2: {
@@ -55,7 +56,9 @@
                     let uname = this.ruleForm2.account;
                     let pwd = this.ruleForm2.checkPass;
 
+
                     requestLogin(uname, pwd).then(user => {
+                        console.log(user);
                         this.logining = false;
                         sessionStorage.setItem('user', JSON.stringify(user));
                         this.$router.push({path: '/config'});
