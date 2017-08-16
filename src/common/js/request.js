@@ -57,7 +57,7 @@ export default function (command, method = 'get', params) {
             // return json.data;
         }else{
             let router = window.vueInstance.$router;
-            if(json.code === 10001 && router.path !== '/login'){
+            if(Array.includes([0, 10001], +json.code) && router.path !== '/login'){
                 router.push({path: '/login'});
             }
             return Promise.reject(json);
